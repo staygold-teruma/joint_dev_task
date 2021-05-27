@@ -5,7 +5,11 @@ def q1
   names = ["田中", "佐藤", "佐々木", "高橋"]
 
   # 以下に回答を記載
-  names.push("斎藤")
+
+  # names.push("斎藤")
+  # 「<<」の記号を使うことでも末尾に要素を追加できる
+  
+  names << "斎藤"
   p names
 
 end
@@ -15,8 +19,11 @@ def q2
   array2 = ["bird", "bat", "tiger"]
 
   # 以下に回答を記載
-  array1.push(array2)
-  array = array1.flatten
+
+  # array1.push(array2)
+  # array = array1.flatten
+  # 配列どうしをつなげる場合は＋でできる
+  array = array1 + array2
   p array
 
 end
@@ -43,16 +50,20 @@ def q5
   array2 = [1, 5, 8, 10]
 
   # 以下に回答を記載
-  p array1.empty?
-  p array2.empty?
+  # p array1.empty?
+  # p array2.empty?
 
   # 上記をまとめて出力する方法はありますか？
   # 配列1.zip(配列2) do |変数1,変数2 |
   #  処理 (真偽判定)
   # end
   # みたいな処理を考えましたが、実現できず…
-  
 
+  array3 = [array1,array2]
+  array3.each do |array|
+    p array.empty?
+  end
+  
 end
 
 def q6
@@ -63,11 +74,18 @@ def q6
   p numbers2
 end
 
+# mapメソッド:各要素へ順に処理を実行してくれるメソッド
+# 配列変数.map {|変数名| 具体的な処理 }
+
 def q7
   array = ["1", "2", "3", "4", "5"]
 
   # 以下に回答を記載
-  array = array.map(&:to_i)
+  # array = array.map(&:to_i)
+
+  # 破壊的メソッドを使えば定義＆自己代入する必要がない
+  array.map!(&:to_i)
+  
   # 以下は変更しないで下さい
   p array
 end
@@ -76,8 +94,8 @@ def q8
   programming_languages = %w(ruby php python javascript)
 
   # 以下に回答を記載
-  programming_languages = programming_languages.map(&:capitalize)
-  upper_case_programming_languages = programming_languages.map(&:upcase)
+  programming_languages = programming_languages.map!(&:capitalize)
+  upper_case_programming_languages = programming_languages.map!(&:upcase)
 
   # 以下は変更しないで下さい
   p programming_languages
@@ -97,22 +115,23 @@ def q10
   foods = %w(いか たこ うに しゃけ うにぎり うに軍艦 うに丼)
 
   # 以下に回答を記載
-  p foods.include?("うに") ? "好物です" : "まぁまぁ好きです"
-
+  foods.each do |food|
+    puts food.include?("うに") ? "#{food}:好物です" : "#{food}:まぁまぁ好きです"
+  end
 end
 
 def q11
   sports = ["サッカー", "バスケ", "野球", ["フットサル", "野球"], "水泳", "ハンドボール", ["卓球", "サッカー", "ボルダリング"]]
 
   # 以下に回答を記載
-  sports_flt_unq = sports.flatten.uniq
+  # sports_flt_unq = sports.flatten.uniq
+  sports.flatten!.uniq!
 
   puts "ユーザーの趣味一覧"
   
-  sports_flt_unq.each.with_index(1) do | sports, i |
-    puts "No#{i} #{sports}"
-  end
-  
+  sports.each.with_index(1) do | sp, i |
+    puts "No#{i} #{sp}"
+  end 
 end
 
 def q12
@@ -165,6 +184,19 @@ end
 
 class UserQ17
   # 以下に回答を記載
+  def initialize(name:, age:, gender:)
+    @name = name
+    @age = age
+    @gender = gender
+  end
+
+  def info
+    puts <<~text 
+    名前：#{@name}
+    年齢：#{@age}
+    性別：#{@gender}
+    text
+  end
 
 end
 
@@ -180,6 +212,18 @@ end
 
 class UserQ18
   # 以下に回答を記載
+  def initialize(name:, age:)
+    @name = name
+    @age = age
+  end
+
+  def introduce
+    if @age >= 20
+      puts "こんにちは、#{@name}と申します。宜しくお願いいたします。"
+    else
+      puts "はいさいまいど〜、#{@name}です！！！"
+    end
+  end
 
 end
 
@@ -194,10 +238,19 @@ end
 
 class Item
   # 以下を修正して下さい
+  # def initialize(name:)
+  #   @name = name
+  # end
 
-  def initialize(name)
+  # def name
+  #   @name
+  # end
+
+  attr_reader :name
+  def initialize(name:)
     @name = name
   end
+
 end
 
 def q19
@@ -208,12 +261,34 @@ end
 
 class UserQ20
   # 以下に回答を記載
-
+  attr_reader :name, :age
+  def initialize(name:, age:)
+    @name = name
+    @age = age
+  end
 end
 
 class Zoo
   # 以下に回答を記載
+  def initialize(entry_fee:)  
+    #unknown keyword: :name (ArgumentError) というエラーメッセージ
+    @entry_fee = entry_fee
+  end
 
+  def info_entry_fee(user)
+    case user.age
+    when 0..5
+      each_entry_fee = @entry_fee[:infant]
+    when 6..12
+      each_entry_fee = @entry_fee[:children]
+    when 13..64
+      each_entry_fee = @entry_fee[:adult]
+    when 65..120
+      each_entry_fee = @entry_fee[:senior]
+    end   
+    puts "#{user.name}さんの入場料は#{each_entry_fee}円です。" 
+  end
+  
 end
 
 
