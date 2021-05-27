@@ -59,8 +59,12 @@ def q5
   # end
   # みたいな処理を考えましたが、実現できず…
 
-  array3 = [array1,array2]
-  array3.each do |array|
+  # array3 = [array1,array2]
+  # array3.each do |array|
+  #   p array.empty?
+  # end
+
+  [array1, array2].each do |array|
     p array.empty?
   end
   
@@ -270,8 +274,9 @@ end
 
 class Zoo
   # 以下に回答を記載
-  def initialize(entry_fee:)  
+  def initialize(name:, entry_fee:)  
     #unknown keyword: :name (ArgumentError) というエラーメッセージ
+    #:nameを引数に加えたら解決
     @entry_fee = entry_fee
   end
 
