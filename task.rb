@@ -283,6 +283,7 @@ class Zoo
     #unknown keyword: :name (ArgumentError) というエラーメッセージ
     #name:を引数に加えたら解決
     @entry_fee = entry_fee
+    # @age_case = {infant: 0..5, chileren: 6..12, adult: 13..64, senior: 65..120}
   end
 
   # ケースごとに変数に代入するのではなく、
@@ -299,6 +300,18 @@ class Zoo
     when 65..120
       @entry_fee[:senior]
     end   
+
+    # each_entry_fee = case user.age
+    # when @age_case[:infant]
+    #   @entry_fee[:infant]
+    # when @age_case[:children]
+    #   @entry_fee[:children]
+    # when @age_case[:adult]
+    #   @entry_fee[:adult]
+    # when @age_case[:senior]
+    #   @entry_fee[:senior]
+    # end 
+
     puts "#{user.name}さんの入場料は#{each_entry_fee}円です。" 
   end
   
