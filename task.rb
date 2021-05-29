@@ -221,11 +221,16 @@ class UserQ18
     @age = age
   end
 
+  # print / puts / p  の違い
+  # print 改行なしで出力
+  # puts  改行ありで出力
+  # p     データ形式も表示
+
   def introduce
     if @age >= 20
-      puts "こんにちは、#{@name}と申します。宜しくお願いいたします。"
+      print "こんにちは、#{@name}と申します。宜しくお願いいたします。"
     else
-      puts "はいさいまいど〜、#{@name}です！！！"
+      print "はいさいまいど〜、#{@name}です！！！"
     end
   end
 
@@ -280,16 +285,19 @@ class Zoo
     @entry_fee = entry_fee
   end
 
+  # ケースごとに変数に代入するのではなく、
+  # whenの中を返り値のみにして、条件文を変数に代入してしまうとコードが簡潔
+  
   def info_entry_fee(user)
-    case user.age
+    each_entry_fee = case user.age
     when 0..5
-      each_entry_fee = @entry_fee[:infant]
+      @entry_fee[:infant]
     when 6..12
-      each_entry_fee = @entry_fee[:children]
+      @entry_fee[:children]
     when 13..64
-      each_entry_fee = @entry_fee[:adult]
+      @entry_fee[:adult]
     when 65..120
-      each_entry_fee = @entry_fee[:senior]
+      @entry_fee[:senior]
     end   
     puts "#{user.name}さんの入場料は#{each_entry_fee}円です。" 
   end
